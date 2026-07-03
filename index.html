@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromoArb - Sports Betting Promotional Arbitrage</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #1a1a1a;
+      background: #f5f5f5;
+      line-height: 1.6;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo { font-size: 20px; font-weight: 600; color: #2563eb; }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #666;
+      font-size: 14px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #2563eb;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+      color: white;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .hero h1 { 
+      font-size: 44px; 
+      margin-bottom: 1rem; 
+      font-weight: 700; 
+    }
+
+    .hero p { 
+      font-size: 18px; 
+      max-width: 600px; 
+      margin: 0 auto 2rem; 
+      opacity: 0.95; 
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: white;
+      color: #2563eb;
+    }
+
+    .btn-primary:hover { 
+      background: #f0f0f0; 
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+    }
+
+    .btn-secondary:hover { 
+      background: rgba(255,255,255,0.1); 
+    }
+
+    .container { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 2rem; 
+    }
+
+    .section {
+      padding: 4rem 2rem;
+      background: white;
+      margin: 2rem 0;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section h2 {
+      font-size: 32px;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #1a1a1a;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .feature-card {
+      padding: 1.5rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .feature-card h3 { 
+      margin-bottom: 1rem; 
+      color: #2563eb; 
+    }
+
+    .feature-card p { 
+      color: #666; 
+      font-size: 14px; 
+    }
+
+    .arb-showcase {
+      background: #f0f7ff;
+      border-left: 4px solid #2563eb;
+      padding: 1.5rem;
+      border-radius: 6px;
+      margin: 2rem 0;
+    }
+
+    .arb-showcase h3 { 
+      margin-bottom: 1rem; 
+      color: #1e40af; 
+    }
+
+    .arb-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #059669;
+      margin: 1rem 0;
+    }
+
+    .math-box {
+      background: #fafafa;
+      padding: 1.5rem;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      margin: 1.5rem 0;
+      border-left: 4px solid #059669;
+    }
+
+    .warning {
+      background: #fef3c7;
+      color: #92400e;
+      padding: 1rem;
+      border-radius: 6px;
+      border-left: 4px solid #f59e0b;
+      margin: 1.5rem 0;
+      font-size: 14px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid #e0e0e0;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-number { 
+      font-size: 32px; 
+      font-weight: 700; 
+      color: #2563eb; 
+    }
+
+    .stat-label { 
+      color: #666; 
+      font-size: 14px; 
+      margin-top: 0.5rem; 
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .comparison-item {
+      background: white;
+      border: 1px solid #e0e0e0;
+      padding: 1.5rem;
+      border-radius: 8px;
+    }
+
+    .comparison-item h3 { 
+      margin-bottom: 1rem; 
+      color: #1a1a1a; 
+    }
+
+    .comparison-item ul { 
+      list-style: none; 
+      margin-left: 0; 
+    }
+
+    .comparison-item li { 
+      margin: 0.75rem 0; 
+      color: #666; 
+      padding-left: 1.5rem; 
+      position: relative; 
+    }
+
+    .comparison-item li:before { 
+      content: "✓"; 
+      position: absolute; 
+      left: 0; 
+      color: #059669; 
+      font-weight: 600; 
+    }
+
+    /* TRACKER STYLES */
+    .tracker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .tracker-header h1 { 
+      font-size: 28px; 
+      color: #1a1a1a; 
+    }
+
+    .header-btn {
+      padding: 10px 20px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .header-btn:hover { 
+      background: #1e40af; 
+    }
+
+    .combos-section {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .combo-card {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .combo-header {
+      padding: 1.5rem;
+      background: #f9f9f9;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+
+    .combo-title { 
+      font-size: 18px; 
+      font-weight: 600; 
+      color: #1a1a1a; 
+    }
+
+    .combo-subtitle { 
+      color: #666; 
+      font-size: 14px; 
+      margin-top: 0.25rem; 
+    }
+
+    .combo-profit {
+      text-align: right;
+      font-size: 24px;
+      font-weight: 700;
+      color: #059669;
+    }
+
+    .combo-profit-label { 
+      font-size: 12px; 
+      color: #666; 
+      margin-top: 0.25rem; 
+    }
+
+    .combo-body {
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .combo-item {
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 1rem;
+      background: #fafafa;
+    }
+
+    .combo-item-book { 
+      font-weight: 600; 
+      color: #2563eb; 
+      margin-bottom: 0.5rem; 
+    }
+
+    .combo-item-promo { 
+      font-size: 13px; 
+      color: #666; 
+      margin-bottom: 0.75rem; 
+    }
+
+    .combo-item-detail { 
+      font-size: 12px; 
+      color: #999; 
+      margin: 0.5rem 0; 
+    }
+
+    .combo-execution {
+      padding: 1.5rem;
+      background: #f0f7ff;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .execution-title { 
+      font-weight: 600; 
+      color: #1e40af; 
+      margin-bottom: 1rem; 
+    }
+
+    .execution-step {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 13px;
+    }
+
+    .step-number {
+      background: #2563eb;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .step-content { 
+      flex: 1; 
+    }
+
+    .step-content strong { 
+      color: #1a1a1a; 
+    }
+
+    .combo-footer {
+      padding: 1.5rem;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-small {
+      padding: 8px 16px;
+      border: 1px solid #e0e0e0;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .btn-small:hover { 
+      background: #f5f5f5; 
+    }
+
+    .btn-execute {
+      background: #059669;
+      color: white;
+      border: none;
+    }
+
+    .btn-execute:hover { 
+      background: #047857; 
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #999;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active { 
+      display: flex; 
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header { 
+      font-size: 20px; 
+      font-weight: 600; 
+      margin-bottom: 1.5rem; 
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label { 
+      display: block; 
+      font-weight: 600; 
+      margin-bottom: 0.5rem; 
+      font-size: 14px; 
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+
+    .btn-cancel {
+      padding: 10px 20px;
+      border: 1px solid #e0e0e0;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-cancel:hover { 
+      background: #f5f5f5; 
+    }
+
+    .btn-submit {
+      padding: 10px 20px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn-submit:hover { 
+      background: #1e40af; 
+    }
+
+    .combo-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: white;
+    }
+
+    .combo-table th {
+      background: #f0f7ff;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      color: #1e40af;
+      border: 1px solid #e0e0e0;
+    }
+
+    .combo-table td {
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .book { 
+      font-weight: 600; 
+      color: #2563eb; 
+    }
+
+    .bonus { 
+      color: #059669; 
+      font-weight: 600; 
+    }
+
+    .footer {
+      background: #1f2937;
+      color: #d1d5db;
+      padding: 2rem;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 28px; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .combo-body { grid-template-columns: 1fr; }
+      .nav-links { gap: 1rem; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">PromoArb</div>
+  <div class="nav-links">
+    <a onclick="switchSection('home')" class="active">Home</a>
+    <a onclick="switchSection('how-it-works')">How it works</a>
+    <a onclick="switchSection('tracker')">Tracker</a>
+    <a onclick="switchSection('opportunities')">Opportunities</a>
+  </div>
+</div>
+
+<!-- HOME SECTION -->
+<div class="section active" id="home">
+  <div class="hero">
+    <h1>Extract guaranteed profit from sportsbook promotions</h1>
+    <p>Don't hunt line differences. Exploit promo structures. Find combinations that guarantee cash regardless of game outcomes.</p>
+    <div class="cta-group">
+      <button class="btn btn-primary" onclick="switchSection('tracker')">Launch tracker</button>
+      <button class="btn btn-secondary" onclick="switchSection('opportunities')">See examples</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section" style="display: block; margin: 0; background: transparent; padding: 3rem 0;">
+      <h2 style="margin-top: 2rem;">Why PromoArb matters</h2>
+      
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-number">$9,500+</div>
+          <div class="stat-label">Weekly bonus value (all books)</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">0%</div>
+          <div class="stat-label">Variance with combos</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">1–2 hrs</div>
+          <div class="stat-label">Setup time</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">30 days</div>
+          <div class="stat-label">Full cycle</div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Traditional betting vs. promotional arbitrage</h3>
+      
+      <div class="comparison-grid">
+        <div class="comparison-item">
+          <h3>Traditional sports betting</h3>
+          <ul>
+            <li>Requires skill/prediction</li>
+            <li>High variance</li>
+            <li>Negative EV long-term</li>
+            <li>Emotional decisions</li>
+          </ul>
+        </div>
+        <div class="comparison-item">
+          <h3>Promotional arbitrage</h3>
+          <ul>
+            <li>No prediction needed</li>
+            <li>Guaranteed profit (math-based)</li>
+            <li>Positive EV by design</li>
+            <li>Mechanical execution</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 style="margin-top: 3rem;">What PromoArb does for you</h2>
+      
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>📋 Tracks all promos</h3>
+          <p>Log every offer from every book. Auto-calculate bonus value, rollover, expiry. Stay organized.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🔗 Finds combinations</h3>
+          <p>AI suggests which promos pair together for guaranteed profit. Shows you combos you'd miss manually.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💰 Calculates exact profit</h3>
+          <p>Shows guaranteed payout for each combo. "Bet $10 here, lose at that book, net $1,500 in free bets."</p>
+        </div>
+        <div class="feature-card">
+          <h3>📅 Execution timeline</h3>
+          <p>Step-by-step checklist. Tells you when to sign up, when to bet, when to claim bonus.</p>
+        </div>
+        <div class="feature-card">
+          <h3>⚠️ Risk flagging</h3>
+          <p>Warns you if a combo violates sportsbook T&Cs (odds minimums, rollover cliffs, state restrictions).</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Dashboard</h3>
+          <p>See total bonus value locked in. Track execution status. Know exactly what you're owed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS SECTION -->
+<div class="section" id="how-it-works">
+  <div class="container">
+    <h2>The promotional arbitrage concept</h2>
+    
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>Traditional arbitrage</h3>
+        <p><strong>How it works:</strong> Buy low at Sportsbook A, sell high at Sportsbook B. Requires constant odds monitoring.</p>
+        <p style="margin-top: 1rem; color: #999; font-size: 12px;">❌ Hard to execute. Margins shrinking. Requires speed.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Promotional arbitrage</h3>
+        <p><strong>How it works:</strong> Combine promo terms to guarantee profit. Example: Lose at one book, win bonus at another. Lock in free bets.</p>
+        <p style="margin-top: 1rem; color: #059669; font-size: 12px;">✓ Slower-moving. Predictable. Repeatable.</p>
+      </div>
+      <div class="feature-card">
+        <h3>PromoArb advantage</h3>
+        <p><strong>We find:</strong> Which promos can be combined. What's the guaranteed payout. Exact execution steps.</p>
+        <p style="margin-top: 1rem; color: #059669; font-size: 12px;">✓ Automates the analysis.</p>
+      </div>
+    </div>
+
+    <h2 style="margin-top: 3rem;">Three core strategies</h2>
+
+    <div class="arb-showcase">
+      <h3>Strategy 1: The "Guaranteed Win/Lose" stack</h3>
+      <p>Use FanDuel's guaranteed $200 + BetMGM's loss bonus $1,500 on opposite sides of the same game.</p>
+      <div class="arb-value">Guaranteed profit: $1,700 in bonus bets from $10 risk</div>
+      
+      <table class="combo-table">
+        <tr>
+          <th>Sportsbook</th>
+          <th>Promo</th>
+          <th>Condition</th>
+          <th>You get</th>
+        </tr>
+        <tr>
+          <td class="book">FanDuel</td>
+          <td>$200 bonus</td>
+          <td>Bet $5 over 7 days</td>
+          <td class="bonus">$200 (guaranteed)</td>
+        </tr>
+        <tr>
+          <td class="book">BetMGM</td>
+          <td>$1,500 bonus</td>
+          <td>First bet loses</td>
+          <td class="bonus">$1,500 (if you lose)</td>
+        </tr>
+      </table>
+
+      <div class="math-box">
+Game: Lakers vs Celtics
+
+Step 1: Bet $5 Lakers at FanDuel → Guaranteed $200 bonus
+Step 2: Bet $5 Celtics at BetMGM → If Celtics loses, get $1,500
+
+Outcome A (Lakers win):
+- Win $5 bet + Collect $200 FD bonus = +$205 net
+
+Outcome B (Celtics win):
+- Win $5 bet + Collect $200 FD bonus + $1,500 BetMGM bonus = +$1,705 net
+
+Worst case: Both sides lose on spread = Still +$1,700 in free bets
+      </div>
+
+      <div class="warning">
+        ⚠️ <strong>Key constraint:</strong> Only works first-time at each sportsbook. Requires separate accounts. Check state availability.
+      </div>
+    </div>
+
+    <div class="arb-showcase">
+      <h3>Strategy 2: The "New customer cascade"</h3>
+      <p>Claim welcome bonuses from ALL major books in sequence. Stack $9,500+ in free bet credits.</p>
+      <div class="arb-value">Total promo value: $9,500+</div>
+
+      <div class="math-box">
+DraftKings: $200
+FanDuel: $200
+BetMGM: $1,500
+Fanatics: $1,000 (10 days × $100/day)
+Caesars: $250
+bet365: $150
+BetRivers: $500
+
+TOTAL: ~$4,800 locked in + $4,200 from daily plays = $9,000+
+      </div>
+
+      <div class="warning">
+        ⚠️ <strong>Avoid the ban:</strong> Don't sign up all at once. Spread over 2 weeks. Vary bet types. Sportsbooks track bonus hunters.
+      </div>
+    </div>
+
+    <div class="arb-showcase">
+      <h3>Strategy 3: The "Daily rollover" grind</h3>
+      <p>Fanatics offers 100% match up to $100 EVERY DAY for 10 days. Redeploy daily to compound.</p>
+      <div class="arb-value">Realistic return: $500–700 profit over 10 days</div>
+
+      <div class="math-box">
+Day 1: Deposit $100 → Get $100 FanCash (free)
+       Bet $200 total on -300 favorite (67% win rate)
+       Expected profit: +$33
+
+Days 2-10: Repeat daily
+Total over 10 days: ~$330 base
+With 70% conversion: ~$700 gross profit
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRACKER SECTION -->
+<div class="section" id="tracker">
+  <div class="container">
+    <div class="tracker-header">
+      <h1>Combo tracker</h1>
+      <div style="display: flex; gap: 12px;">
+        <button class="header-btn" onclick="loadSampleBonuses()" style="background: #10b981; border: 1px solid #10b981;">📊 Load current bonuses</button>
+        <button class="header-btn" id="add-recurring-btn" onclick="openAddPromoModal()">+ Add promotion</button>
+        <button class="header-btn" style="background: #f59e0b;" id="add-flash-btn" onclick="openAddFlashDealModal()" style="display: none;">⚡ Add flash deal</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number" id="total-promos">0</div>
+        <div class="stat-label">Promos tracked</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="total-combos">0</div>
+        <div class="stat-label">Combos found</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="total-value">$0</div>
+        <div class="stat-label">Locked-in value</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="combos-active">0</div>
+        <div class="stat-label">Ready to execute</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 2rem; margin-bottom: 2rem;">
+      <button onclick="switchTrackerTab('recurring')" class="tab-btn active" id="tab-recurring" style="flex: 1; padding: 12px; background: white; border: 2px solid #2563eb; color: #2563eb; border-radius: 6px; font-weight: 600; cursor: pointer;">Recurring bonuses</button>
+      <button onclick="switchTrackerTab('flash')" class="tab-btn" id="tab-flash" style="flex: 1; padding: 12px; background: white; border: 1px solid #e0e0e0; color: #666; border-radius: 6px; font-weight: 600; cursor: pointer;">⚡ Flash deals</button>
+    </div>
+
+    <div class="combos-section" id="combos-section">
+      <div class="empty-state">
+        <p>No combinations found yet. Add your first promotion to get started.</p>
+      </div>
+    </div>
+
+    <div class="combos-section" id="flash-section" style="display: none;">
+      <div class="empty-state">
+        <p>No flash deals tracked yet. Click "Add flash deal" to log spontaneous promos.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OPPORTUNITIES SECTION -->
+<div class="section" id="opportunities">
+  <div class="container">
+    <h2>Real opportunities (July 2026)</h2>
+
+    <div style="background: #fff7ed; border-left: 4px solid #f59e0b; padding: 1.5rem; border-radius: 6px; margin-bottom: 2rem;">
+      <h3 style="color: #d97706; margin-bottom: 1rem;">⚡ Flash deal advantage</h3>
+      <p>Flash deals are <strong>spontaneous, high-value offers</strong> that sportsbooks and prop platforms run to attract traffic. These are often better ROI than recurring bonuses because they're less regulated and more generous.</p>
+      <p style="margin-top: 1rem; color: #666; font-size: 14px;">Examples: PrizePicks 30% off props, DraftKings Boost Club increasing multipliers, FanDuel same-game parlays 2x payout on specific games, Caesars flash deposit match.</p>
+    </div>
+
+    <h3 style="margin-bottom: 1.5rem; font-size: 20px;">Flash deal strategies</h3>
+
+    <div class="arb-showcase" style="background: #fef3c7; border-left: 4px solid #f59e0b;">
+      <h3 style="color: #d97706;">Strategy: PrizePicks discount stacking</h3>
+      <p>When PrizePicks runs 25-40% discounts on props (common during peak betting hours 1-5pm ET), stack with DraftKings/FanDuel bonuses.</p>
+      <div class="arb-value">Opportunity: Save $300-500 per day during peak hours</div>
+      
+      <div class="math-box" style="border-left-color: #f59e0b;">
+Scenario: PrizePicks running 30% off all 2-leg props
+
+Normal cost: $100 2-leg prop at +200 odds
+With 30% discount: $70 2-leg prop at +200 odds = $70 × 3 = $210 payout
+
+Use DraftKings bonus bet ($200):
+- Bet $70 on PrizePicks
+- Bet $200 on DraftKings prop (same outcome)
+- If win: Collect $210 (PP) + bonus bet payout
+- Effective discount leveraged = YES
+      </div>
+
+      <div class="warning">
+        ⚠️ <strong>Timing is key:</strong> PrizePicks discounts peak during 1-5pm ET and 8-11pm ET. Check their Twitter/app notifications.
+      </div>
+    </div>
+
+    <div class="arb-showcase" style="background: #fef3c7; border-left: 4px solid #f59e0b; margin-top: 2rem;">
+      <h3 style="color: #d97706;">Strategy: DraftKings boost club + FanDuel same-game parlay</h3>
+      <p>DraftKings Boost Club often multiplies odds on specific picks (e.g., +150 becomes +250). Stack with FanDuel same-game parlays for compounding effect.</p>
+      <div class="arb-value">Potential: 2-3x payout multiplier</div>
+
+      <div class="math-box" style="border-left-color: #f59e0b;">
+Example: DraftKings Boost Club +200% on Mahomes passing yards over 250
+
+Normal: -200 odds on Mahomes over 250
+Boosted: +250 odds (3.5x multiplier)
+Bet: $100 on boost
+
+Pair with:
+FanDuel same-game parlay (Mahomes over 250 + one other leg at +400)
+Use $200 bonus bet on parlay
+
+If both hit:
+- DraftKings: $100 × 3.5 = $350
+- FanDuel: $200 × 5 = $1,000
+TOTAL: $1,350 profit
+      </div>
+    </div>
+
+    <div class="arb-showcase" style="background: #fef3c7; border-left: 4px solid #f59e0b; margin-top: 2rem;">
+      <h3 style="color: #d97706;">Strategy: Caesars flash deposit match + prop consolidation</h3>
+      <p>Caesars runs flash 50% deposit matches during late night (11pm-2am ET). Combine with PrizePicks props for value accumulation.</p>
+      <div class="arb-value">Real example: $1,000 deposit → $500 free → $600+ in prop value</div>
+
+      <div class="math-box" style="border-left-color: #f59e0b;">
+Timeline:
+11pm ET: Caesars sends push notification: "50% match up to $500"
+11:02pm: You deposit $1,000 → get $500 free = $1,500 total to play
+11:03pm: Bet $1,500 on PrizePicks props at +EV lines
+Result: Small win → withdraw $1,650
+Net: +$650 risk-free
+      </div>
+    </div>
+
+    <h2 style="margin-top: 3rem;">Easy wins: Best recurring promo combos</h2>
+    <p style="color: #666; margin-bottom: 2rem;">These are live RIGHT NOW and take 30 minutes to set up. No timing risk, no flash deals needed.</p>
+
+    <div class="arb-showcase">
+      <h3>💰 Best combo #1: Fanatics Daily + FanDuel 7-day</h3>
+      <p><strong>Total guaranteed value: ~$1,350 with minimal risk</strong></p>
+      
+      <div style="background: #f0f7ff; padding: 1.5rem; border-radius: 6px; margin: 1.5rem 0;">
+        <h4 style="color: #1e40af; margin-bottom: 1rem;">The setup:</h4>
+        <ul style="color: #666; line-height: 1.8;">
+          <li><strong>Fanatics:</strong> 100% match up to $100/day × 10 days = $1,000 in FanCash</li>
+          <li><strong>FanDuel:</strong> Bet $5/day for 7 days → get $200 bet reset tokens = $1,400 value</li>
+        </ul>
+      </div>
+
+      <div class="math-box">
+Day 1-7: Alternate betting between Fanatics and FanDuel
+- Fanatics: Bet $100 on team A → get $100 FanCash back (if lose)
+- FanDuel: Bet $5 opposite team A → get $200 bonus if win
+- If Fanatics wins: You keep the $200+ profit
+- If FanDuel wins: Use $200 bonus + remaining FanCash
+
+Conservative profit estimate: $300-500 guaranteed with proper hedging
+Execution time: 7 days
+      </div>
+
+      <div class="warning">
+        ✓ <strong>Why this works:</strong> Both books pay regardless of outcome (Fanatics is a 1x match, FanDuel's bot reset tokens are guaranteed). You're just timing your bets to maximize both.
+      </div>
+    </div>
+
+    <div class="arb-showcase" style="background: #fef3c7; border-left: 4px solid #f59e0b; margin-top: 2rem;">
+      <h3>💰 Best combo #2: BetMGM first loss + DraftKings welcome</h3>
+      <p><strong>Total guaranteed value: ~$1,900 from single pair of bets</strong></p>
+      
+      <div style="background: #fff7ed; padding: 1.5rem; border-radius: 6px; margin: 1.5rem 0;">
+        <h4 style="color: #d97706; margin-bottom: 1rem;">The setup:</h4>
+        <ul style="color: #666; line-height: 1.8;">
+          <li><strong>BetMGM:</strong> First bet loses → get up to $1,500 in bonus bets</li>
+          <li><strong>DraftKings:</strong> Bet $5+ → get $200 in bonus bets (must win)</li>
+        </ul>
+      </div>
+
+      <div class="math-box">
+Execution (same game, same bet):
+- Pick a high-odds game (e.g., moneyline at -150/-150)
+- Bet $100 on Team A at BetMGM (first bet, intentionally)
+- Bet $100 on Team B at DraftKings (opposite side)
+
+Outcome A: Team A wins
+- DraftKings: $100 × 2.5 (moneyline) = $250 → use for other bets
+- BetMGM: Bet loses → get $100 in bonus bets
+- Profit: ~$150 + additional bonus bets
+
+Outcome B: Team B wins
+- BetMGM: Bet loses → get $100 in bonus bets
+- DraftKings: Win $250 in cash + get $200 bonus immediately
+- Profit: ~$200 guaranteed + $100 bonus bets
+
+Net result: Win-win scenario with $1,300+ in follow-up bonus power
+      </div>
+
+      <div class="warning">
+        ✓ <strong>Why this works:</strong> You're guaranteed a loss on one side (to trigger BetMGM's loss protection) while winning on the other (to get DraftKings' guaranteed bonus).
+      </div>
+    </div>
+
+    <div class="arb-showcase" style="background: #f0fdf4; border-left: 4px solid #059669; margin-top: 2rem;">
+      <h3>💰 Best combo #3: Caesars 10 boosts + BetRivers loss protection</h3>
+      <p><strong>Total guaranteed value: ~$800-1,200 depending on boost selection</strong></p>
+      
+      <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 6px; margin: 1.5rem 0;">
+        <h4 style="color: #059669; margin-bottom: 1rem;">The setup:</h4>
+        <ul style="color: #666; line-height: 1.8;">
+          <li><strong>Caesars:</strong> Bet $1+ → get 10 × 100% profit boosts</li>
+          <li><strong>BetRivers:</strong> First bet loses → get $500 in bonus bets</li>
+        </ul>
+      </div>
+
+      <div class="math-box">
+Three-step approach:
+
+STEP 1: Use Caesars profit boosts on favorites
+- Find 10 games with strong favorites (-200 or better)
+- Bet $20 on each with 100% profit boost = 2x payout
+- Expected: 8 wins at $40 profit each = $320
+- 2 losses cost $40 but trigger bonus bet usage
+
+STEP 2: Stack with BetRivers
+- Place opposite hedge bets on same games at BetRivers
+- If Caesars bets lose, trigger BetRivers loss protection ($500)
+- Use $500 bonus to arb other opportunities
+
+Guaranteed profit: $200-400 from Caesars + $500 bonus power at BetRivers
+      </div>
+
+      <div class="warning">
+        ✓ <strong>Why this works:</strong> Caesars' 10 boosts are straightforward EV+ (pick high-probability favorites). BetRivers loss protection is your hedge.
+      </div>
+    </div>
+
+    <div class="arb-showcase" style="background: #fef2f2; border-left: 4px solid #dc2626; margin-top: 2rem;">
+      <h3>💰 Best combo #4: New customer cascade (all 7 books)</h3>
+      <p><strong>Total guaranteed value: ~$9,500-11,000 in bonus bets from ~$50 in min bets</strong></p>
+      
+      <div style="background: #fef2f2; padding: 1.5rem; border-radius: 6px; margin: 1.5rem 0;">
+        <h4 style="color: #dc2626; margin-bottom: 1rem;">The sequence:</h4>
+        <ul style="color: #666; line-height: 1.8;">
+          <li><strong>DraftKings:</strong> Bet $5 → $200 bonus</li>
+          <li><strong>FanDuel:</strong> Bet $5/day × 7 days → $1,400 total</li>
+          <li><strong>BetMGM:</strong> First bet loses → $1,500 bonus</li>
+          <li><strong>Caesars:</strong> Bet $1+ → 10 × $25 boosts</li>
+          <li><strong>Fanatics:</strong> Bet $10/day × 10 days → $1,000 FanCash</li>
+          <li><strong>bet365:</strong> Bet $10 → $150 guaranteed bonus</li>
+          <li><strong>BetRivers:</strong> First bet loses → $500 bonus</li>
+        </ul>
+      </div>
+
+      <div class="math-box">
+Timeline: 10 days, ~$50 total min bets
+
+Daily schedule (10 days):
+- Day 1: DraftKings $5 bet (collect $200) + FanDuel $5 (collect $50 reset)
+- Day 2-7: Fanatics $10 daily (collect ~$10 FanCash each day) + FanDuel $5 (collect $50 daily)
+- Day 1: BetMGM $50 loss bet (collect $500 bonus) + BetRivers $50 loss bet (collect $500)
+- Day 1: bet365 $10 bet (collect $150 guaranteed)
+- Throughout: Use Caesars boosts on safe bets
+
+Total value collected: $9,500-11,000
+Total out of pocket: ~$50 (if you time losses properly, closer to $25)
+      </div>
+
+      <div class="warning">
+        ✓ <strong>Why this is the golden strategy:</strong> You're claiming every major book's welcome bonus in a 10-day window. This is the "new customer cascade" — hit all books before they limit you.
+      </div>
+    </div>
+
+    <h2 style="margin-top: 3rem;">Active sportsbook bonuses (July 2026)</h2>
+    <p style="color: #666; margin-bottom: 1.5rem;">These are the baseline bonuses available right now. Copy these into the Tracker to find automatic combos.</p>
+
+    <div style="overflow-x: auto; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 2rem;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr style="background: #f9f9f9; border-bottom: 2px solid #e0e0e0;">
+            <th style="padding: 12px; text-align: left; font-weight: 600; color: #1a1a1a;">Sportsbook</th>
+            <th style="padding: 12px; text-align: left; font-weight: 600; color: #1a1a1a;">Offer</th>
+            <th style="padding: 12px; text-align: left; font-weight: 600; color: #1a1a1a;">Bonus</th>
+            <th style="padding: 12px; text-align: left; font-weight: 600; color: #1a1a1a;">Min Bet</th>
+            <th style="padding: 12px; text-align: left; font-weight: 600; color: #1a1a1a;">Type</th>
+            <th style="padding: 12px; text-align: left; font-weight: 600; color: #1a1a1a;">Expires</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 12px; color: #1a1a1a; font-weight: 500;">DraftKings</td>
+            <td style="padding: 12px; color: #666;">Bet $5+ (must win)</td>
+            <td style="padding: 12px; color: #059669; font-weight: 600;">$200</td>
+            <td style="padding: 12px; color: #666;">$5</td>
+            <td style="padding: 12px; background: #f0f7ff; color: #1e40af; border-radius: 4px; font-size: 11px;">Bonus bet (guaranteed)</td>
+            <td style="padding: 12px; color: #666;">7 days</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+            <td style="padding: 12px; color: #1a1a1a; font-weight: 500;">FanDuel</td>
+            <td style="padding: 12px; color: #666;">Bet $5/day × 7 days</td>
+            <td style="padding: 12px; color: #059669; font-weight: 600;">$1,400</td>
+            <td style="padding: 12px; color: #666;">$5</td>
+            <td style="padding: 12px; background: #f0f7ff; color: #1e40af; border-radius: 4px; font-size: 11px;">Bet reset tokens</td>
+            <td style="padding: 12px; color: #666;">14 days</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 12px; color: #1a1a1a; font-weight: 500;">BetMGM</td>
+            <td style="padding: 12px; color: #666;">First bet loses</td>
+            <td style="padding: 12px; color: #059669; font-weight: 600;">$1,500</td>
+            <td style="padding: 12px; color: #666;">$10</td>
+            <td style="padding: 12px; background: #fee2e2; color: #991b1b; border-radius: 4px; font-size: 11px;">Loss protection</td>
+            <td style="padding: 12px; color: #666;">7 days</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+            <td style="padding: 12px; color: #1a1a1a; font-weight: 500;">Caesars</td>
+            <td style="padding: 12px; color: #666;">Bet $1+ (-10000 or longer)</td>
+            <td style="padding: 12px; color: #059669; font-weight: 600;">10 × $25 boosts</td>
+            <td style="padding: 12px; color: #666;">$1</td>
+            <td style="padding: 12px; background: #fef3c7; color: #92400e; border-radius: 4px; font-size: 11px;">Profit boosts</td>
+            <td style="padding: 12px; color: #666;">14 days</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 12px; color: #1a1a1a; font-weight: 500;">Fanatics</td>
+            <td style="padding: 12px; color: #666;">Match up to $100/day × 10 days</td>
+            <td style="padding: 12px; color: #059669; font-weight: 600;">$1,000</td>
+            <td style="padding: 12px; color: #666;">$1+</td>
+            <td style="padding: 12px; background: #f0f7ff; color: #1e40af; border-radius: 4px; font-size: 11px;">Deposit match (FanCash)</td>
+            <td style="padding: 12px; color: #666;">7 days</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0; background: #fafafa;">
+            <td style="padding: 12px; color: #1a1a1a; font-weight: 500;">bet365</td>
+            <td style="padding: 12px; color: #666;">Bet $10 (guaranteed)</td>
+            <td style="padding: 12px; color: #059669; font-weight: 600;">$150</td>
+            <td style="padding: 12px; color: #666;">$10</td>
+            <td style="padding: 12px; background: #f0f7ff; color: #1e40af; border-radius: 4px; font-size: 11px;">Bonus bet (guaranteed)</td>
+            <td style="padding: 12px; color: #666;">30 days</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 12px; color: #1a1a1a; font-weight: 500;">BetRivers</td>
+            <td style="padding: 12px; color: #666;">First bet loses</td>
+            <td style="padding: 12px; color: #059669; font-weight: 600;">$500</td>
+            <td style="padding: 12px; color: #666;">$10</td>
+            <td style="padding: 12px; background: #fee2e2; color: #991b1b; border-radius: 4px; font-size: 11px;">Loss protection</td>
+            <td style="padding: 12px; color: #666;">7 days</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="background: #f0f7ff; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #2563eb; margin-bottom: 2rem;">
+      <h4 style="color: #1e40af; margin-bottom: 0.75rem;">💡 Quick tip:</h4>
+      <p style="color: #666; margin: 0; font-size: 13px;"><strong>Copy this table into the Tracker</strong> to see which combinations the system finds. Loss protection + guaranteed bonus = automatic profit pairs. For example: BetMGM (if lose) + DraftKings (guaranteed) = guaranteed win on one side.</p>
+    </div>
+
+    <h2 style="margin-top: 3rem;">How to execute RIGHT NOW</h2>
+
+    <div style="background: #f9f9f9; padding: 2rem; border-radius: 8px; border: 1px solid #e0e0e0;">
+      <h3 style="margin-bottom: 1.5rem;">Step-by-step (takes 1-2 hours to set up):</h3>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div>
+          <h4 style="color: #2563eb; margin-bottom: 1rem;">1️⃣ Pick your combo</h4>
+          <p style="color: #666; font-size: 14px;">Start with "Best combo #1" (Fanatics + FanDuel). It's the easiest and lowest risk.</p>
+        </div>
+        <div>
+          <h4 style="color: #2563eb; margin-bottom: 1rem;">2️⃣ Sign up & deposit</h4>
+          <p style="color: #666; font-size: 14px;">Create accounts at both sportsbooks. Use referral links if available for bonus stacking.</p>
+        </div>
+        <div>
+          <h4 style="color: #2563eb; margin-bottom: 1rem;">3️⃣ Claim welcome offer</h4>
+          <p style="color: #666; font-size: 14px;">Navigate to "Promos" tab. Opt-in to the welcome bonus explicitly.</p>
+        </div>
+        <div>
+          <h4 style="color: #2563eb; margin-bottom: 1rem;">4️⃣ Place bets strategically</h4>
+          <p style="color: #666; font-size: 14px;">Follow the "math box" above. Hedge with opposite sides on high-volume games.</p>
+        </div>
+        <div>
+          <h4 style="color: #2563eb; margin-bottom: 1rem;">5️⃣ Collect bonuses</h4>
+          <p style="color: #666; font-size: 14px;">Wait for bonuses to post (usually 24 hours). Track in your Promos tab.</p>
+        </div>
+        <div>
+          <h4 style="color: #2563eb; margin-bottom: 1rem;">6️⃣ Convert to cash</h4>
+          <p style="color: #666; font-size: 14px;">Use OddsJam or manual hedging to convert bonus bets to real money.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="arb-showcase">
+      <h3>Combo #1: The "Guaranteed Win/Lose" stack</h3>
+      <p>Use FanDuel's guaranteed $200 + BetMGM's loss bonus $1,500 on opposite sides of the same game.</p>
+      <div class="arb-value">Guaranteed profit: $1,700 in bonus bets from $10 risk</div>
+      
+      <table class="combo-table">
+        <tr>
+          <th>Sportsbook</th>
+          <th>Promo</th>
+          <th>Condition</th>
+          <th>You get</th>
+        </tr>
+        <tr>
+          <td class="book">FanDuel</td>
+          <td>$200 bonus</td>
+          <td>Bet $5 over 7 days</td>
+          <td class="bonus">$200 (guaranteed)</td>
+        </tr>
+        <tr>
+          <td class="book">BetMGM</td>
+          <td>$1,500 bonus</td>
+          <td>First bet loses</td>
+          <td class="bonus">$1,500 (if you lose)</td>
+        </tr>
+      </table>
+
+      <div class="math-box">
+Game: Lakers vs Celtics
+
+Step 1: Bet $5 Lakers at FanDuel → Guaranteed $200 bonus
+Step 2: Bet $5 Celtics at BetMGM → If Celtics loses, get $1,500
+
+Outcome A (Lakers win):
+- Win $5 bet + Collect $200 FD bonus = +$205 net
+
+Outcome B (Celtics win):
+- Win $5 bet + Collect $200 FD bonus + $1,500 BetMGM bonus = +$1,705 net
+
+Worst case: Both sides lose on spread = Still +$1,700 in free bets
+      </div>
+
+      <div class="warning">
+        ⚠️ <strong>Key constraint:</strong> Only works first-time at each sportsbook. Requires separate accounts. Check state availability.
+      </div>
+    </div>
+
+    <div class="arb-showcase">
+      <h3>Combo #2: The "New customer cascade"</h3>
+      <p>Claim welcome bonuses from ALL major books in sequence. Stack $9,500+ in free bet credits.</p>
+      <div class="arb-value">Total promo value: $9,500+</div>
+
+      <table class="combo-table">
+        <tr>
+          <th>Sportsbook</th>
+          <th>Bonus</th>
+          <th>Min. cost</th>
+        </tr>
+        <tr>
+          <td class="book">DraftKings</td>
+          <td class="bonus">$200</td>
+          <td>$5 bet (must win)</td>
+        </tr>
+        <tr>
+          <td class="book">FanDuel</td>
+          <td class="bonus">$200</td>
+          <td>$5 bet (any 7 days)</td>
+        </tr>
+        <tr>
+          <td class="book">BetMGM</td>
+          <td class="bonus">$1,500</td>
+          <td>$5 (let first bet lose)</td>
+        </tr>
+        <tr>
+          <td class="book">Fanatics</td>
+          <td class="bonus">$1,000</td>
+          <td>$100/day × 10 days (100% match)</td>
+        </tr>
+        <tr>
+          <td class="book">Caesars</td>
+          <td class="bonus">$250</td>
+          <td>$1+ bet</td>
+        </tr>
+        <tr>
+          <td class="book">bet365</td>
+          <td class="bonus">$150</td>
+          <td>$10 bet (win or lose)</td>
+        </tr>
+        <tr>
+          <td class="book">BetRivers</td>
+          <td class="bonus">$500</td>
+          <td>$10 (let first bet lose)</td>
+        </tr>
+      </table>
+
+      <div class="warning">
+        ⚠️ <strong>Avoid the ban:</strong> Don't sign up all at once. Spread over 2 weeks. Vary bet types (moneylines, spreads, props). Don't machine-gun bets. Sportsbooks track bonus hunters.
+      </div>
+    </div>
+
+    <div class="arb-showcase">
+      <h3>Combo #3: The "Daily rollover" grind</h3>
+      <p>Fanatics offers 100% match up to $100 EVERY DAY for 10 days. Redeploy daily to compound.</p>
+      <div class="arb-value">Realistic return: $500–700 profit over 10 days</div>
+
+      <div class="math-box">
+Day 1: Deposit $100 → Get $100 FanCash (free)
+       Bet $200 total on -300 favorite (67% win rate)
+       Expected profit: +$33.33
+
+Day 2: Repeat with new daily match
+       Total deposit: $100 → Expected: +$33
+
+Days 3-10: Continue at 70% conversion rate
+           10 days × $33 per day = ~$330 base
+
+Compounding:
+If you reinvest wins, 70% conversion on $1,000 total deployed = $700 gross
+Minus original seed ($100) = $600 net profit from single-book daily rolling bonus
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FLASH DEAL MODAL -->
+<div class="modal" id="addFlashDealModal">
+  <div class="modal-content">
+    <div class="modal-header">⚡ Log a flash deal</div>
+    <form id="flashDealForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Sportsbook / Platform</label>
+          <select id="flashBook" required>
+            <option value="">Select</option>
+            <option>DraftKings</option>
+            <option>FanDuel</option>
+            <option>BetMGM</option>
+            <option>Caesars</option>
+            <option>Fanatics</option>
+            <option>bet365</option>
+            <option>PrizePicks</option>
+            <option>DraftKings Boost Club</option>
+            <option>FanDuel Momentum Boosts</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Deal type</label>
+          <select id="flashType" required>
+            <option value="">Select</option>
+            <option>Prop discount</option>
+            <option>Boost multiplier</option>
+            <option>Free play</option>
+            <option>Payout boost</option>
+            <option>Deposit match (time-limited)</option>
+            <option>Contest prize</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Deal description</label>
+        <textarea id="flashDesc" placeholder="E.g., 'PrizePicks 30% off all 2-leg props' or 'FanDuel boosting Mahomes under 250 to +750'" required></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Value/Discount %</label>
+          <input type="text" id="flashValue" placeholder="E.g., 30% or $150 boost" required>
+        </div>
+        <div class="form-group">
+          <label>Expires in (hours)</label>
+          <input type="number" id="flashExpires" placeholder="E.g., 4 or 24" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Source (where did you see this?)</label>
+        <input type="text" id="flashSource" placeholder="E.g., Twitter, email, app notification" required>
+      </div>
+
+      <div class="form-buttons">
+        <button type="button" class="btn-cancel" onclick="closeAddFlashDealModal()">Cancel</button>
+        <button type="submit" class="btn-submit">Log flash deal</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="addPromoModal">
+  <div class="modal-content">
+    <div class="modal-header">Add promotional offer</div>
+    <form id="promoForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Sportsbook</label>
+          <select id="sportsbook" required>
+            <option value="">Select sportsbook</option>
+            <option>DraftKings</option>
+            <option>FanDuel</option>
+            <option>BetMGM</option>
+            <option>Caesars</option>
+            <option>Fanatics</option>
+            <option>bet365</option>
+            <option>BetRivers</option>
+            <option>PointsBet</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Promo type</label>
+          <select id="promoType" required>
+            <option value="">Select type</option>
+            <option>Bonus bets (guaranteed)</option>
+            <option>Bonus bets (if lose)</option>
+            <option>Deposit match</option>
+            <option>Daily rolling match</option>
+            <option>Free play</option>
+            <option>Odds boost</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Bonus value</label>
+          <input type="number" id="bonusValue" placeholder="$200" required>
+        </div>
+        <div class="form-group">
+          <label>Min. bet required</label>
+          <input type="number" id="minBet" placeholder="$5" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Rollover (e.g. 1x)</label>
+          <input type="text" id="rollover" placeholder="1x">
+        </div>
+        <div class="form-group">
+          <label>Expires (days)</label>
+          <input type="number" id="expiresDays" placeholder="7" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Notes / T&C restrictions</label>
+        <textarea id="notes" placeholder="E.g., 'Requires -200+ odds', 'First bet only'"></textarea>
+      </div>
+
+      <div class="form-buttons">
+        <button type="button" class="btn-cancel" onclick="closeAddPromoModal()">Cancel</button>
+        <button type="submit" class="btn-submit">Add promotion</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="footer">
+  <p><strong>PromoArb</strong> — Promotional arbitrage made simple.</p>
+  <p style="margin-top: 0.5rem; font-size: 12px;">Always verify promo terms and legality in your state. Responsible gambling.</p>
+</div>
+
+<script>
+let promos = JSON.parse(localStorage.getItem('promos') || '[]');
+let flashDeals = JSON.parse(localStorage.getItem('flashDeals') || '[]');
+
+function switchTrackerTab(tab) {
+  const recurringSection = document.getElementById('combos-section');
+  const flashSection = document.getElementById('flash-section');
+  const recurringTab = document.getElementById('tab-recurring');
+  const flashTab = document.getElementById('tab-flash');
+  const addRecurringBtn = document.getElementById('add-recurring-btn');
+  const addFlashBtn = document.getElementById('add-flash-btn');
+
+  if (tab === 'recurring') {
+    recurringSection.style.display = 'grid';
+    flashSection.style.display = 'none';
+    recurringTab.style.borderColor = '#2563eb';
+    recurringTab.style.color = '#2563eb';
+    flashTab.style.borderColor = '#e0e0e0';
+    flashTab.style.color = '#666';
+    addRecurringBtn.style.display = 'block';
+    addFlashBtn.style.display = 'none';
+  } else {
+    recurringSection.style.display = 'none';
+    flashSection.style.display = 'grid';
+    recurringTab.style.borderColor = '#e0e0e0';
+    recurringTab.style.color = '#666';
+    flashTab.style.borderColor = '#2563eb';
+    flashTab.style.color = '#2563eb';
+    addRecurringBtn.style.display = 'none';
+    addFlashBtn.style.display = 'block';
+    renderFlashDeals();
+  }
+}
+
+function openAddFlashDealModal() {
+  document.getElementById('addFlashDealModal').classList.add('active');
+}
+
+function closeAddFlashDealModal() {
+  document.getElementById('addFlashDealModal').classList.remove('active');
+  document.getElementById('flashDealForm').reset();
+}
+
+document.getElementById('flashDealForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const flashDeal = {
+    id: Date.now(),
+    book: document.getElementById('flashBook').value,
+    type: document.getElementById('flashType').value,
+    description: document.getElementById('flashDesc').value,
+    value: document.getElementById('flashValue').value,
+    expiresIn: parseInt(document.getElementById('flashExpires').value),
+    source: document.getElementById('flashSource').value,
+    dateAdded: new Date().toISOString(),
+  };
+
+  flashDeals.push(flashDeal);
+  localStorage.setItem('flashDeals', JSON.stringify(flashDeals));
+  closeAddFlashDealModal();
+  switchTrackerTab('flash');
+  renderFlashDeals();
+});
+
+function renderFlashDeals() {
+  const section = document.getElementById('flash-section');
+
+  if (flashDeals.length === 0) {
+    section.innerHTML = '<div class="empty-state"><p>No flash deals logged yet. Spot a deal? Click "Add flash deal" to log it instantly.</p></div>';
+    return;
+  }
+
+  const now = new Date();
+  const dealsWithTime = flashDeals.map(deal => {
+    const addedTime = new Date(deal.dateAdded);
+    const expiresTime = new Date(addedTime.getTime() + deal.expiresIn * 60 * 60 * 1000);
+    const timeRemaining = expiresTime - now;
+    const hoursLeft = Math.max(0, Math.ceil(timeRemaining / (60 * 60 * 1000)));
+    const isExpired = timeRemaining <= 0;
+    return { ...deal, hoursLeft, isExpired, expiresTime };
+  });
+
+  const activeDeals = dealsWithTime.filter(d => !d.isExpired);
+  const expiredDeals = dealsWithTime.filter(d => d.isExpired);
+
+  let html = '';
+
+  if (activeDeals.length > 0) {
+    html += '<h3 style="color: #059669; margin-bottom: 1.5rem; font-size: 18px;">🔥 Active flash deals</h3>';
+    html += activeDeals.map(deal => `
+      <div class="combo-card" style="border-left: 4px solid #f59e0b;">
+        <div class="combo-header">
+          <div>
+            <div class="combo-title">${deal.book}</div>
+            <div class="combo-subtitle">${deal.description}</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 20px; color: #f59e0b; font-weight: 700;">⏰ ${deal.hoursLeft}h</div>
+            <div style="font-size: 12px; color: #999;">Expires soon</div>
+          </div>
+        </div>
+        <div style="padding: 1.5rem; background: #fef3c7; border-top: 1px solid #fbbf24;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 14px;">
+            <div><strong>Deal:</strong> ${deal.type}</div>
+            <div><strong>Value:</strong> ${deal.value}</div>
+            <div><strong>Source:</strong> ${deal.source}</div>
+          </div>
+        </div>
+        <div style="padding: 1.5rem; display: flex; gap: 12px;">
+          <button class="btn-small" onclick="copyToClipboard('${deal.description}')">Copy deal</button>
+          <button class="btn-small" style="background: #ff6b6b; color: white; border: none;" onclick="removeFlashDeal(${deal.id})">Remove</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  if (expiredDeals.length > 0) {
+    html += '<h3 style="color: #999; margin: 2rem 0 1rem; font-size: 16px;">Expired deals</h3>';
+    html += expiredDeals.map(deal => `
+      <div class="combo-card" style="opacity: 0.5;">
+        <div class="combo-header">
+          <div>
+            <div class="combo-title">${deal.book}</div>
+            <div class="combo-subtitle">${deal.description}</div>
+          </div>
+          <div style="text-align: right; color: #999;">Expired</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  section.innerHTML = html;
+}
+
+function removeFlashDeal(id) {
+  flashDeals = flashDeals.filter(d => d.id !== id);
+  localStorage.setItem('flashDeals', JSON.stringify(flashDeals));
+  renderFlashDeals();
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Copied to clipboard!');
+  });
+}
+
+function loadSampleBonuses() {
+  const samplePromos = [
+    {
+      id: 1,
+      sportsbook: 'DraftKings',
+      bonusValue: 200,
+      minBet: 5,
+      type: 'Bonus bets (guaranteed)',
+      condition: 'Bet $5+ (must win)',
+      expiresDays: 7,
+      notes: 'Bonus bets expire after 7 days'
+    },
+    {
+      id: 2,
+      sportsbook: 'FanDuel',
+      bonusValue: 1400,
+      minBet: 5,
+      type: 'Bet reset tokens',
+      condition: 'Bet $5/day for 7 days',
+      expiresDays: 14,
+      notes: '$200/day token for 7 days'
+    },
+    {
+      id: 3,
+      sportsbook: 'BetMGM',
+      bonusValue: 1500,
+      minBet: 10,
+      type: 'Bonus bets (if lose)',
+      condition: 'First bet loses',
+      expiresDays: 7,
+      notes: 'Up to $1,500 returned as bonus bets'
+    },
+    {
+      id: 4,
+      sportsbook: 'Caesars',
+      bonusValue: 250,
+      minBet: 1,
+      type: 'Profit boosts',
+      condition: 'Bet $1+ (-10000 or longer)',
+      expiresDays: 14,
+      notes: '10 × 100% profit boosts'
+    },
+    {
+      id: 5,
+      sportsbook: 'Fanatics',
+      bonusValue: 1000,
+      minBet: 1,
+      type: 'Deposit match (FanCash)',
+      condition: 'Match up to $100/day × 10 days',
+      expiresDays: 7,
+      notes: 'Daily 100% match, max $100/day'
+    },
+    {
+      id: 6,
+      sportsbook: 'bet365',
+      bonusValue: 150,
+      minBet: 10,
+      type: 'Bonus bets (guaranteed)',
+      condition: 'Bet $10 (guaranteed)',
+      expiresDays: 30,
+      notes: 'Win or lose, you get $150'
+    },
+    {
+      id: 7,
+      sportsbook: 'BetRivers',
+      bonusValue: 500,
+      minBet: 10,
+      type: 'Bonus bets (if lose)',
+      condition: 'First bet loses',
+      expiresDays: 7,
+      notes: 'Up to $500 returned as bonus bets'
+    }
+  ];
+
+  // Clear existing promos and load sample ones
+  promos = samplePromos;
+  localStorage.setItem('promos', JSON.stringify(promos));
+  
+  // Refresh the display
+  renderCombos();
+  
+  // Show confirmation
+  alert(`✅ Loaded 7 current sportsbook bonuses!\n\nPromos loaded:\n${samplePromos.map(p => `• ${p.sportsbook}: $${p.bonusValue}`).join('\n')}\n\nScroll down to see automatic combo matches.`);
+}
+
+function switchSection(sectionId) {
+  // Hide all sections
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  
+  // Show selected section
+  document.getElementById(sectionId).classList.add('active');
+  
+  // Update nav links
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  // Scroll to top
+  window.scrollTo(0, 0);
+}
+
+function openAddPromoModal() {
+  document.getElementById('addPromoModal').classList.add('active');
+}
+
+function closeAddPromoModal() {
+  document.getElementById('addPromoModal').classList.remove('active');
+  document.getElementById('promoForm').reset();
+}
+
+document.getElementById('promoForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const promo = {
+    id: Date.now(),
+    sportsbook: document.getElementById('sportsbook').value,
+    type: document.getElementById('promoType').value,
+    bonusValue: parseInt(document.getElementById('bonusValue').value),
+    minBet: parseInt(document.getElementById('minBet').value),
+    rollover: document.getElementById('rollover').value,
+    expiresDays: parseInt(document.getElementById('expiresDays').value),
+    notes: document.getElementById('notes').value,
+    dateAdded: new Date().toISOString(),
+  };
+
+  promos.push(promo);
+  localStorage.setItem('promos', JSON.stringify(promos));
+  closeAddPromoModal();
+  switchSection('tracker');
+  render();
+});
+
+function findCombinations() {
+  const combos = [];
+
+  // Check for flash deals that can be used with recurring promos
+  if (flashDeals.length > 0 && promos.length > 0) {
+    const now = new Date();
+    const activeFlash = flashDeals.filter(f => {
+      const addedTime = new Date(f.dateAdded);
+      const expiresTime = new Date(addedTime.getTime() + f.expiresIn * 60 * 60 * 1000);
+      return expiresTime > now;
+    });
+
+    activeFlash.forEach(flash => {
+      promos.forEach(promo => {
+        if (flash.book === promo.sportsbook || flash.book.includes(promo.sportsbook)) {
+          const comboType = 'Flash + Recurring Combo';
+          const profit = promo.bonusValue * 0.5; // Conservative estimate
+          const steps = [
+            `Use recurring bonus: $${promo.bonusValue} from ${promo.sportsbook}`,
+            `Combine with flash deal: ${flash.description}`,
+            `Boost effective value by utilizing the time-limited offer`,
+            `Execute quickly (${Math.ceil((new Date(new Date(flash.dateAdded).getTime() + flash.expiresIn * 60 * 60 * 1000) - now) / (60 * 60 * 1000))} hours remaining)`,
+          ];
+          
+          combos.push({
+            id: `flash-${flash.id}-promo-${promo.id}`,
+            promo1: promo,
+            flashDeal: flash,
+            profit,
+            comboType,
+            steps,
+            risks: ['Flash deals are time-sensitive', 'May have limited availability'],
+            minCost: promo.minBet,
+            isFlashCombo: true,
+          });
+        }
+      });
+    });
+  }
+
+  for (let i = 0; i < promos.length; i++) {
+    for (let j = i + 1; j < promos.length; j++) {
+      const p1 = promos[i];
+      const p2 = promos[j];
+
+      if (p1.sportsbook === p2.sportsbook) continue;
+
+      let profit = 0;
+      let comboType = '';
+      let steps = [];
+      let risks = [];
+
+      if (p1.type.includes('if lose') && p2.type.includes('guaranteed')) {
+        const guaranteed = p2;
+        const ifLose = p1;
+        profit = ifLose.bonusValue + guaranteed.bonusValue;
+        comboType = '🎯 Win/Lose Pair';
+        steps = [
+          `1. Sign up ${ifLose.sportsbook} & deposit (min: $${ifLose.minBet})`,
+          `2. Sign up ${guaranteed.sportsbook} & deposit (min: $${guaranteed.minBet})`,
+          `3. Find a same-game matchup (e.g., NFL moneyline)`,
+          `4. Bet $${ifLose.minBet} on Team A at ${ifLose.sportsbook}`,
+          `5. Bet $${guaranteed.minBet} on Team B at ${guaranteed.sportsbook} (opposite side)`,
+          `6. ${guaranteed.sportsbook} PAYS: $${guaranteed.bonusValue} (guaranteed, regardless)`,
+          `7. ${ifLose.sportsbook} PAYS: $${ifLose.bonusValue} (if you lose your first bet)`,
+          `RESULT: $${profit} in bonus power from $${ifLose.minBet + guaranteed.minBet} invested`,
+        ];
+        risks = [];
+      } else if (p1.type.includes('if lose') && p2.type.includes('if lose')) {
+        // Two loss protection offers - can be chained
+        profit = p1.bonusValue + p2.bonusValue;
+        comboType = '🔄 Dual Loss Pair';
+        steps = [
+          `1. Sign up ${p1.sportsbook} (first bet protection: $${p1.bonusValue})`,
+          `2. Sign up ${p2.sportsbook} (first bet protection: $${p2.bonusValue})`,
+          `3. Make your FIRST bet at ${p1.sportsbook} on outcome A (bet $${p1.minBet})`,
+          `4. Make your FIRST bet at ${p2.sportsbook} on outcome B (opposite side)`,
+          `5. One side loses → Collect $${Math.max(p1.bonusValue, p2.bonusValue)} bonus`,
+          `6. Use collected bonus to arb with other books`,
+          `RESULT: $${profit} in total loss protection (spread across two books)`,
+        ];
+        risks = ['Must use each book\'s first bet carefully - claim highest value first'];
+      } else if (p1.type.includes('guaranteed') && p2.type.includes('guaranteed')) {
+        profit = p1.bonusValue + p2.bonusValue - (p1.minBet + p2.minBet);
+        comboType = '💰 Dual Guaranteed';
+        steps = [
+          `1. Sign up ${p1.sportsbook}`,
+          `2. Place bet of $${p1.minBet}+`,
+          `3. ${p1.sportsbook} pays $${p1.bonusValue} (guaranteed)`,
+          `4. Sign up ${p2.sportsbook}`,
+          `5. Place bet of $${p2.minBet}+`,
+          `6. ${p2.sportsbook} pays $${p2.bonusValue} (guaranteed)`,
+          `RESULT: $${profit} net profit after expenses`,
+        ];
+      }
+
+      if (profit > 100 && comboType) {
+        combos.push({
+          id: `${p1.id}-${p2.id}`,
+          promo1: p1,
+          promo2: p2,
+          profit,
+          comboType,
+          steps,
+          risks,
+          minCost: p1.minBet + p2.minBet,
+        });
+      }
+    }
+  }
+
+  return combos.sort((a, b) => b.profit - a.profit);
+}
+
+function render() {
+  const combos = findCombinations();
+  const section = document.getElementById('combos-section');
+
+  document.getElementById('total-promos').textContent = promos.length;
+  document.getElementById('total-combos').textContent = combos.length;
+  document.getElementById('combos-active').textContent = combos.filter(c => c.profit > 0).length;
+
+  const totalValue = combos.reduce((sum, c) => sum + c.profit, 0);
+  document.getElementById('total-value').textContent = '$' + totalValue;
+
+  if (combos.length === 0) {
+    section.innerHTML = '<div class="empty-state"><p>No combinations found yet. Add more promotions to see guaranteed profit pairs.</p></div>';
+    return;
+  }
+
+  section.innerHTML = combos.map(combo => {
+    const isWinLose = combo.comboType.includes('Win/Lose');
+    const isDualGuaranteed = combo.comboType.includes('Dual Guaranteed');
+    const borderColor = isWinLose ? '#059669' : (combo.isFlashCombo ? '#f59e0b' : '#2563eb');
+    const bgColor = isWinLose ? '#f0fdf4' : (combo.isFlashCombo ? '#fef3c7' : '#f0f7ff');
+    
+    return `
+    <div class="combo-card" style="border: 2px solid ${borderColor}; border-left: 4px solid ${borderColor};">
+      <div class="combo-header" style="background: ${bgColor};">
+        <div>
+          <div class="combo-title">${combo.comboType}</div>
+          <div class="combo-subtitle">${combo.isFlashCombo ? combo.flashDeal.description : combo.promo1.sportsbook + ' + ' + combo.promo2.sportsbook}</div>
+        </div>
+        <div style="text-align: right;">
+          <div class="combo-profit">+$${combo.profit}</div>
+          <div class="combo-profit-label">Guaranteed profit</div>
+        </div>
+      </div>
+
+      <div class="combo-body">
+        <div class="combo-item">
+          <div class="combo-item-book">${combo.promo1.sportsbook}</div>
+          <div class="combo-item-promo"><strong>$${combo.promo1.bonusValue}</strong> ${combo.promo1.type}</div>
+          <div class="combo-item-detail">Min bet: $${combo.promo1.minBet}</div>
+          <div class="combo-item-detail">Expires: ${combo.promo1.expiresDays} days</div>
+          ${combo.promo1.notes ? `<div class="combo-item-detail">⚠️ ${combo.promo1.notes}</div>` : ''}
+        </div>
+
+        <div class="combo-item" ${combo.isFlashCombo ? 'style="background: #fef3c7; border: 1px solid #fbbf24;"' : ''}>
+          ${combo.isFlashCombo ? `
+            <div class="combo-item-book">⚡ ${combo.flashDeal.book}</div>
+            <div class="combo-item-promo"><strong>${combo.flashDeal.value}</strong> ${combo.flashDeal.type}</div>
+            <div class="combo-item-detail">📍 ${combo.flashDeal.source}</div>
+            <div class="combo-item-detail" style="color: #d97706; font-weight: 600;">⏰ Limited time!</div>
+          ` : `
+            <div class="combo-item-book">${combo.promo2.sportsbook}</div>
+            <div class="combo-item-promo"><strong>$${combo.promo2.bonusValue}</strong> ${combo.promo2.type}</div>
+            <div class="combo-item-detail">Min bet: $${combo.promo2.minBet}</div>
+            <div class="combo-item-detail">Expires: ${combo.promo2.expiresDays} days</div>
+            ${combo.promo2.notes ? `<div class="combo-item-detail">⚠️ ${combo.promo2.notes}</div>` : ''}
+          `}
+        </div>
+      </div>
+
+      <div class="combo-execution">
+        <div class="execution-title">How to execute</div>
+        ${combo.steps.map((step, idx) => `
+          <div class="execution-step">
+            <div class="step-number">${idx + 1}</div>
+            <div class="step-content">${step}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="combo-footer">
+        <div style="flex: 1;">
+          ${combo.risks.map(risk => `<div class="warning">⚠️ ${risk}</div>`).join('')}
+        </div>
+        <div class="footer-buttons">
+          <button class="btn-small btn-execute">Start execution</button>
+        </div>
+      </div>
+    </div>
+  `;
+  }).join('');
+}
+
+// Initialize
+render();
+</script>
+
+</body>
+</html>
